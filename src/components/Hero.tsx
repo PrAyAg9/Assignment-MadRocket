@@ -77,7 +77,7 @@ export function Hero() {
             [Bar Chart -- Coming soon]
           </div>
         </div>
-      </div><a href="https://github.com" className="fixed bottom-4 right-4 p-2 bg-white rounded-full shadow-lg">
+      </div><a href="https://github.com/PrAyAg9/Assignment-MadRocket" className="fixed bottom-4 right-4 p-2 bg-white rounded-full shadow-lg">
         <Github className="w-6 h-6" />
       </a></>
   );
