@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase/firebase';
@@ -10,6 +8,11 @@ import {
   Bell,
   ChevronDown,
 } from 'lucide-react';
+
+interface TeamData {
+  name: string;
+  version: string;
+}
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
@@ -22,6 +25,19 @@ export default function Navbar() {
   // State to manage team dropdown visibility
   const [isTeamDropdownOpen, setTeamDropdownOpen] = useState(false);
   const teamDropdownRef = useRef<HTMLDivElement>(null);
+
+  // State to manage selected team
+  const [selectedTeam, setSelectedTeam] = useState<TeamData>({
+    name: 'Team 1',
+    version: 'Free',
+  });
+
+  // Data for teams
+  const teams: TeamData[] = [
+    { name: 'Team 1', version: 'Free' },
+    { name: 'Team 2', version: 'Paid' },
+    { name: 'Team 3', version: 'Paid' },
+  ];
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -50,6 +66,21 @@ export default function Navbar() {
     };
   }, []);
 
+  // Function to handle team selection
+  const handleTeamSelection = (team: TeamData) => {
+    setSelectedTeam(team);
+    setTeamDropdownOpen(false);
+  };
+
+  // Get version label color based on version
+  const getVersionLabelColor = (version: string) => {
+    if (version === 'Free') {
+      return 'bg-green-100 text-green-800';
+    } else {
+      return 'bg-yellow-100 text-yellow-800';
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-10">
       <div className="flex items-center justify-between px-4 py-3">
@@ -63,46 +94,31 @@ export default function Navbar() {
             className="ml-8 flex items-center cursor-pointer"
             onClick={() => setTeamDropdownOpen(!isTeamDropdownOpen)}
           >
-            <span className="text-sm text-gray-500">Team 1</span>
+            <span className="text-sm text-gray-500">{selectedTeam.name}</span>
             <ChevronDown className="w-4 h-4 text-gray-500 ml-1" />
           </div>
           {isTeamDropdownOpen && (
             <div className="absolute left-12 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-              <button
-                onClick={() => {
-                  // Handle team selection logic here
-                  setTeamDropdownOpen(false);
-                }}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Team 1
-              </button>
-              <button
-                onClick={() => {
-                  // Handle team selection logic here
-                  // Paid team logic can be added
-                  setTeamDropdownOpen(false);
-                }}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Team 2 (Paid)
-              </button>
-              <button
-                onClick={() => {
-                  // Handle team selection logic here
-                  // Paid team logic can be added
-                  setTeamDropdownOpen(false);
-                }}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Team 3 (Paid)
-              </button>
+              {teams.map((team) => (
+                <button
+                  key={team.name}
+                  onClick={() => handleTeamSelection(team)}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  {team.name}
+                </button>
+              ))}
             </div>
           )}
-          <span className="ml-2 px-2 py-0.5 text-xs bg-gray-100 rounded-full">
-            Free
+          <span
+            className={`ml-2 px-2 py-0.5 text-xs rounded-full ${getVersionLabelColor(
+              selectedTeam.version
+            )}`}
+          >
+            {selectedTeam.version}
           </span>
         </div>
+
         {/* Right Side: Icons and Profile */}
         <div className="flex items-center gap-4">
           <Search className="w-5 h-5 text-gray-500" />
@@ -121,9 +137,11 @@ export default function Navbar() {
           <div
             className="relative"
             ref={profileDropdownRef}
-            onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
           >
-            <div className="flex items-center cursor-pointer">
+            <button
+              onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
+              className="flex items-center focus:outline-none"
+            >
               <img
                 src={
                   user?.photoURL ||
@@ -133,7 +151,7 @@ export default function Navbar() {
                 className="w-8 h-8 rounded-full"
               />
               <ChevronDown className="w-4 h-4 text-gray-500 ml-1" />
-            </div>
+            </button>
             {isProfileDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
                 {user ? (
