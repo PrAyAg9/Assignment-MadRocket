@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
@@ -42,6 +44,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
+            {/* Name */}
             <div>
               <label className="block text-gray-600">Name</label>
               <input
@@ -53,6 +56,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                 required
               />
             </div>
+            {/* Class */}
             <div>
               <label className="block text-gray-600">Class</label>
               <input
@@ -64,7 +68,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                 required
               />
             </div>
-            {/* Repeat similar blocks for the rest of the fields */}
+            {/* Section */}
             <div>
               <label className="block text-gray-600">Section</label>
               <input
@@ -75,6 +79,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+            {/* Roll Number */}
             <div>
               <label className="block text-gray-600">Roll Number</label>
               <input
@@ -85,7 +90,94 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
-            {/* Add the rest of the fields similarly */}
+            {/* Email */}
+            <div>
+              <label className="block text-gray-600">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={studentData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Phone Number */}
+            <div>
+              <label className="block text-gray-600">Phone Number</label>
+              <input
+                type="tel"
+                name="phoneNumber"
+                value={studentData.phoneNumber}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Address */}
+            <div>
+              <label className="block text-gray-600">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={studentData.address}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Date of Birth */}
+            <div>
+              <label className="block text-gray-600">Date of Birth</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={studentData.dateOfBirth}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Gender */}
+            <div>
+              <label className="block text-gray-600">Gender</label>
+              <input
+                type="text"
+                name="gender"
+                value={studentData.gender}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Guardian Name */}
+            <div>
+              <label className="block text-gray-600">Guardian Name</label>
+              <input
+                type="text"
+                name="guardianName"
+                value={studentData.guardianName}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Guardian Contact */}
+            <div>
+              <label className="block text-gray-600">Guardian Contact</label>
+              <input
+                type="tel"
+                name="guardianContact"
+                value={studentData.guardianContact}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            {/* Admission Date */}
+            <div>
+              <label className="block text-gray-600">Admission Date</label>
+              <input
+                type="date"
+                name="admissionDate"
+                value={studentData.admissionDate}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
           </div>
           <div className="flex justify-end space-x-4">
             <button
